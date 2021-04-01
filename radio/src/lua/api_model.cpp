@@ -474,8 +474,8 @@ static int luaModelSetFlightMode(lua_State * L)
       uint8_t idx = 0;
       for (lua_pushnil(L); lua_next(L, -2); lua_pop(L, 1), idx++) {
         int16_t val = luaL_checkinteger(L, -1);
-        if (idx < NUM_TRIMS)
-          fm->trim[idx].value = (val & 0x3FF);
+        if (idx < NUM_TRIMS && val < 1023 && val > -1023)
+          fm->trim[idx].value = val;
       }
     }
     else if (!strcmp(key, "trimsModes")) {
